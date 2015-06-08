@@ -1,0 +1,11 @@
+c:\users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\bin\Debug\szetvalaszto.exe.config
+c:\users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.csproj.ResolveComReference.cache
+c:\users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.Properties.Resources.resources
+c:\users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.csproj.GenerateResource.Cache
+c:\users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\bin\Debug\szetvalaszto.exe
+c:\users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\bin\Debug\szetvalaszto.pdb
+c:\users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.exe
+c:\users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.pdb
+C:\Users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.BejelentkezoForm.resources
+C:\Users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.PreferenciaMakerForm.resources
+C:\Users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.csprojResolveAssemblyReference.cache
