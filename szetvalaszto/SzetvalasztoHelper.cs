@@ -17,7 +17,6 @@ namespace szetvalaszto
 
         public static string PrefXlsx = ConfigurationManager.AppSettings["Prefxlsx"];
         public static string EredmenyXlsx = ConfigurationManager.AppSettings["Eredmenyxlsx"];
-        public static List<Preferencia> preferenciak;
         public static int TaborokSzama = Convert.ToInt32(ConfigurationManager.AppSettings["TaborokSzama"]);
         public static int elsotaborletszama = Convert.ToInt32(ConfigurationManager.AppSettings["elsotaborletszama"]);
         public static int masodiktaborletszama = Convert.ToInt32(ConfigurationManager.AppSettings["masodiktaborletszama"]);
@@ -25,6 +24,9 @@ namespace szetvalaszto
         public static int negyediktaborletszama = Convert.ToInt32(ConfigurationManager.AppSettings["negyediktaborletszama"]);
 
         #endregion
+
+        public static List<Preferencia> preferenciak;
+        public static List<Par> Parok;
 
         public static void ExportPreferenciak(List<Preferencia> prefz)
         {
@@ -79,7 +81,7 @@ namespace szetvalaszto
         {
             readprefz();
 
-
+            SzetvalasztoHelper.Parok = BejelentkezoForm.Parok.OrderByDescending(x => x.evfolyam).ToList<Par>();
 
             CreateResult();
             
