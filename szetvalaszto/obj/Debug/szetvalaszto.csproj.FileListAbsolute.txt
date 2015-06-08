@@ -9,3 +9,6 @@ c:\users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto
 C:\Users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.BejelentkezoForm.resources
 C:\Users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.PreferenciaMakerForm.resources
 C:\Users\dfarkas\documents\visual studio 2013\Projects\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.csprojResolveAssemblyReference.cache
+C:\Users\dfarkas\Documents\Git\szetvalaszto\szetvalaszto\szetvalaszto\bin\Debug\szetvalaszto.exe.config
+C:\Users\dfarkas\Documents\Git\szetvalaszto\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.csproj.ResolveComReference.cache
+C:\Users\dfarkas\Documents\Git\szetvalaszto\szetvalaszto\szetvalaszto\obj\Debug\szetvalaszto.pdb
