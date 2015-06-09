@@ -26,7 +26,8 @@ namespace szetvalaszto
         #endregion
 
         public static List<Preferencia> preferenciak;
-        public static List<Par> Parok;
+        public static List<Preferencia> Kotesek;
+        public static List<Tabor> Taborok;
 
         public static void ExportPreferenciak(List<Preferencia> prefz)
         {
@@ -81,10 +82,56 @@ namespace szetvalaszto
         {
             readprefz();
 
-            SzetvalasztoHelper.Parok = BejelentkezoForm.Parok.OrderByDescending(x => x.evfolyam).ToList<Par>();
+            LoadKotesek();
 
-            CreateResult();
+            InitTaborok();
             
+            //CreateResult();
+            
+        }
+
+        private static void InitTaborok()
+        {
+            int[] taborokletszama = new int[4];
+            taborokletszama[0] = elsotaborletszama;
+            taborokletszama[1] = masodiktaborletszama;
+            taborokletszama[2] = harmadiktaborletszama;
+            taborokletszama[3] = negyediktaborletszama;
+
+            Taborok = new List<Tabor>(TaborokSzama);
+            for (int i = 0; i < TaborokSzama; i++)
+            {
+                Taborok.Add(new Tabor(taborokletszama[i]));
+            }
+        }
+
+        /// <summary>
+        /// Ez annyit csinál hogy veszi a preferencia sorokat és kötések formájában összesíti őket
+        /// Pl:
+        /// preferencia: a köt b-hez 5 ponttal
+        /// preferencia: b köt a-hoz 5 ponttal
+        /// implájing
+        /// Kötés: a köt b-hez 10 ponttal
+        /// </summary>
+        private static void LoadKotesek()
+        {
+            Kotesek = new List<Preferencia>();
+            foreach (Preferencia pref in preferenciak)
+            {
+                int prefpontCounter = pref.prefpont;
+                List<Preferencia> prflst = Kotesek.Where(x => x.valasztott == pref.valaszto).ToList().Where(x => pref.valasztott == x.valaszto).ToList();
+                if (prflst.Count > 0)
+                {
+                    continue;
+                }
+
+                foreach (var prf in preferenciak.Where(x => x.valasztott == pref.valaszto).ToList().Where(x => pref.valasztott == x.valaszto).ToList())
+                {
+                    prefpontCounter += prf.prefpont;
+                }
+                Kotesek.Add(new Preferencia(pref.valaszto, pref.valasztott, prefpontCounter, pref.kaszt));
+            }
+            Kotesek = Kotesek.OrderByDescending(x => x.prefpont).ToList();
         }
 
         private static void CreateResult()
@@ -128,14 +175,14 @@ namespace szetvalaszto
                     }
                 }
 
-                int evfolyam = BejelentkezoForm.Parok.Where(x => x.par == valaszto).Select(x => x.evfolyam).First();
+                int evfolyam = BejelentkezoForm.Parok.Where(x => x.par == valaszto).Select(x => x.kaszt).First();
                 SzetvalasztoHelper.preferenciak.Add(new Preferencia(valaszto, valasztott, prefpont, evfolyam));
             }
 
             xlWorkBook.Close(true, null, null);
             xlApp.Quit();
 
-            SzetvalasztoHelper.preferenciak = SzetvalasztoHelper.preferenciak.OrderByDescending(x => x.prefpont).ThenByDescending(x => x.evfolyam).ToList<Preferencia>();
+            SzetvalasztoHelper.preferenciak = SzetvalasztoHelper.preferenciak.OrderByDescending(x => x.prefpont).ThenByDescending(x => x.kaszt).ToList<Preferencia>();
         }
 
         #endregion
