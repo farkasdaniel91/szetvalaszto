@@ -86,7 +86,7 @@ namespace szetvalaszto
 
             InitTaborok();
             
-            //CreateResult();
+            CreateResult();
             
         }
 
@@ -103,8 +103,74 @@ namespace szetvalaszto
             {
                 Taborok.Add(new Tabor(taborokletszama[i]));
             }
+            AdjMindenkitTaborhoz();
         }
 
+        private static void AdjMindenkitTaborhoz()
+        {
+            // Megpróbálunk először a preferenciapontokat és a kasztot sorba rendezve minden hülyét táborhoz rakni.
+            foreach (Tabor tabor in Taborok)
+            {
+                // itt ezt azért osztom el kettővel mert kettesével adjuk hozzá a kötések feleit táborokhoz
+                // ha a jövőben lesz tábor ahol páratlan számú csoport lesz ez a logika nem jó 
+                int letszamcheck;
+                if (int.TryParse((tabor.letszam / 2).ToString(), out letszamcheck))
+                {
+                    if (letszamcheck > 0)
+                    {
+                        for (int i = 0; i < letszamcheck; i++)
+                        {
+                            bool addvalaszto = true;
+                            bool addvalasztott = true;
+                            foreach (Tabor t in Taborok)
+                            {
+                                if (t.parok.Select(x => x.par).ToList().Contains(Kotesek[i].valaszto))
+                                {
+                                    addvalaszto = false;
+                                }
+                                if (t.parok.Select(x => x.par).ToList().Contains(Kotesek[i].valasztott))
+                                {
+                                    addvalasztott = false;
+                                }
+                            }
+                            if (addvalaszto)
+                            {
+                                tabor.parok.Add(new Par(Kotesek[i].valaszto));
+                            }
+                            if (addvalasztott)
+                            {
+                                tabor.parok.Add(new Par(Kotesek[i].valasztott));
+                            }
+                        }
+                    }
+                }
+            }
+            // Összeszedjük kik maradtak ki az előző körből
+            List<Par> voltak = new List<Par>();
+            foreach(List<Par> par in Taborok.Select(x => x.parok).ToList())
+            {
+                voltak.AddRange(par);
+            }   
+            List<Par> kimaradtak = new List<Par>();
+            foreach (Par par in BejelentkezoForm.Parok)
+	        {
+		        if (!voltak.Select(x => x.par).Contains(par.par))
+	            {
+		            kimaradtak.Add(par);
+	            }
+	        }
+
+            // Sorba berakjuk őket
+            int kimaradtindex = 0;
+            foreach (Tabor tabor in Taborok)
+            {
+                for (int i = tabor.parok.Count; i < tabor.letszam; i++)
+                {
+                    tabor.parok.Add(kimaradtak[kimaradtindex]);
+                    kimaradtindex++;
+                }
+            }
+        }
         /// <summary>
         /// Ez annyit csinál hogy veszi a preferencia sorokat és kötések formájában összesíti őket
         /// Pl:
@@ -141,6 +207,36 @@ namespace szetvalaszto
 
             Workbook wb = xlApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
             Worksheet ws = (Worksheet)wb.Worksheets[1];
+
+            //// +      o     +              o   
+            ////    +             o     +       +
+            ////o          +
+            ////    o  +           +        +
+            ////+        o     o       +        o
+            ////-_-_-_-_-_-_-_,------,      o 
+            ////_-_-_-_-_-_-_-|   /\_/\  
+            ////-_-_-_-_-_-_-~|__( ^ .^)  +     +  
+            ////_-_-_-_-_-_-_-""  ""      
+            ////+      o         o   +       o
+            ////    +         +
+            ////o        o         o      o     +
+            ////    o           +
+            ////+      +     o        o      +    
+
+            ws.Cells[1, 1] = "TÁBOR1";
+            ws.Cells[1, 3] = "TÁBOR2";
+            ws.Cells[1, 5] = "TÁBOR3";
+            int taborIndex = 1;
+            foreach (Tabor tabor in Taborok)
+            {
+                int parindex = 2;
+                foreach (Par par in tabor.parok)
+                {
+                    ws.Cells[parindex, taborIndex] = par.par;
+                    parindex++;
+                }
+                taborIndex += 2;
+            }
         }
 
         public static void readprefz()
